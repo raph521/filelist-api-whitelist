@@ -2,7 +2,7 @@
 
 ### Introduction
 
-This is a simple python script which uses a requests to update your whitelisted public IP in your FileList profile so that you can use *arr type aplications if your IP is dynamic.
+This is a simple python script which uses requests to update your whitelisted public IP in your FileList profile so that you can use *arr type aplications if your IP is dynamic.
 
 ### How to build
 
