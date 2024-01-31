@@ -50,6 +50,7 @@ def authenticate(user, password):
             session.post(login_url, data=data)
             if not session.cookies.get("pass"):
                 logging.error("Login not successful, check credentials...")
+                logging.error("Will try again after 6 hours")
                 # 6 hour wait because wrong credentials can block the account.
                 sleep(21600)
             return session
@@ -159,9 +160,19 @@ def fetch_and_update_profile(session, current_wan_ip):
         sleep(300)
 
 
+def load_secret(path):
+    try:
+        with open(path, 'r') as secret_file:
+            return secret_file.read().strip()
+    except FileNotFoundError as e:
+        logging.error(e)
+
 if __name__ == '__main__':
-    username = os.environ.get('FL_USERNAME', None)
-    password = os.environ.get('FL_PASSWORD', None)
+    username_path = os.environ.get('FL_USERNAME', None)
+    password_path = os.environ.get('FL_PASSWORD', None)
+
+    username = load_secret(username_path)
+    password = load_secret(password_path)
 
     if username is None:
         logging.error("Error: FL_USERNAME is not set.")
