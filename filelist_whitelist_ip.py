@@ -134,23 +134,41 @@ def fetch_and_update_profile(session, current_wan_ip):
             soup = BeautifulSoup(response.content, "html.parser")
 
             form_data = {}
-            for input_tag in soup.find_all('input'):
+            # Handle text inputs, radio buttons, and hidden inputs
+            for input_tag in soup.find_all('input', type=['text', 'radio', 'password', 'hidden']):
                 name = input_tag.get('name')
                 value = input_tag.get('value', '')
+                if input_tag.get('type') == 'radio' and not input_tag.has_attr('checked'):
+                    continue
                 if name:
                     form_data[name] = value
 
-            # Delete the resetpasskey tag from the dict to avoid resetting the passkey...
-            form_data.pop("resetpasskey", None)
+            # Handle checkboxes, include only if checked
+            for checkbox in soup.find_all('input', type='checkbox'):
+                name = checkbox.get('name')
+                if name == 'resetpasskey':  # Skip adding resetpasskey to form_data
+                    continue
+                if checkbox.has_attr('checked'):
+                    form_data[name] = 'on'
 
+            # Handle select dropdowns
+            for select in soup.find_all('select'):
+                name = select.get('name')
+                selected_option = select.find('option', selected=True)
+                if selected_option:
+                    form_data[name] = selected_option.get('value', '')
+
+            # Update 'whitelistip' with the current WAN IP if it's different
             if form_data.get('whitelistip') != current_wan_ip:
                 form_data['whitelistip'] = current_wan_ip
+
+                # Submit the update request with all form data, excluding resetpasskey
                 update_response = session.post(update_page_url, data=form_data)
                 if update_response.status_code == 200:
                     logging.info("Successfully updated the whitelist IP.")
                     break
                 else:
-                    logging.error(f"Failed to update. Status Code: {update_response.status_code}")
+                    print(f"Failed to update. Status Code: {update_response.status_code}")
             else:
                 logging.info("No update needed; WAN IP matches the Whitelist IP.")
                 break
@@ -158,7 +176,6 @@ def fetch_and_update_profile(session, current_wan_ip):
             logging.error(f"Error with updating whitelist IP: {e}")
         logging.info(f"Retrying in 5 minutes...")
         sleep(300)
-
 
 def load_secret(path):
     try:
