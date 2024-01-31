@@ -31,7 +31,6 @@ docker prune -a
 cd ~/your_preferred_folder/filelist-api-whitelist/
 ./setup.sh
 ```
-After this, you can redo the first step "How to build and run"
 
 ## Contributing
 *Big thanks to Mnml*  
