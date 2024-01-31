@@ -23,7 +23,7 @@ chmod u+x setup.sh
 docker logs -f filelist-api
 ```
 
-### How to fix if you type your credentials and you find out after the fact
+### How to fix if you mistype your credentials and you find out after the fact
 
 ```shell
 docker rm -f filelist-api
