@@ -12,6 +12,9 @@ echo "$username" > username
 # Ask for password
 read -p "Enter password: " password
 
+# Clearing screen using ANSI escape sequences
+printf "\033c"
+
 # Create file "password" and insert the entered password
 echo "$password" > password
 
