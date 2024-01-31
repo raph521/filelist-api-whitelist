@@ -2,12 +2,12 @@
 
 ### Introduction
 
-This is a simple python script which uses a headless browser to update your public IP in FL profile.
+This is a simple python script which uses a requests to update your whitelisted public IP in your FileList profile so that you can use *arr type aplications if your IP is dynamic.
 
 ### How to build
 
 ```shell
-docker build -t myregistry.example.com/filelist-api-whitelist:1
+docker build -t filelist-api-whitelist .
 ```
 
 ## How to run
@@ -28,17 +28,10 @@ version: '3.2'
 services:
     changedetection:
       image: myregistry.example.com/filelist-api-whitelist:1 .
-      container_name: filelist-api
+      container_name: filelist-api-whitelist
       environment:
         - FL_USERNAME=/run/secrets/my_username
         - FL_PASSWORD=/run/secrets/my_password
-        - CHECK_INTERVAL=10 #in minutes I suggest putting more than 5 minutes.
-        - DRIVER=chrome # container_name of browserless port is always 3000
-      restart: unless-stopped
-
-    browserless-chrome:
-      container_name: chrome
-      image: browserless/chrome
       restart: unless-stopped
 ```
 
@@ -54,17 +47,10 @@ version: '3.2'
 services:
     changedetection:
       image: myregistry.example.com/filelist-api-whitelist:1 .
-      container_name: filelist-api
+      container_name: filelist-api-whitelist
       environment:
         - FL_USERNAME=YOUR_USER
         - FL_PASSWORD=YOUR_PASSWORD
-        - CHECK_INTERVAL=10 # in minutes I suggest putting more than 5 minutes.
-        - DRIVER=chrome # container_name of browserless port is always 3000
-      restart: unless-stopped
-
-    browserless-chrome:
-      container_name: chrome
-      image: browserless/chrome
       restart: unless-stopped
 ```
 
