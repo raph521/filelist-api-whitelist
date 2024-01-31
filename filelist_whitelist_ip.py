@@ -170,7 +170,7 @@ def fetch_and_update_profile(session, current_wan_ip):
                     logging.info("Successfully updated the whitelist IP.")
                     break
                 else:
-                    print(f"Failed to update. Status Code: {update_response.status_code}")
+                    logging.error(f"Failed to update. Status Code: {update_response.status_code}")
             else:
                 logging.info("No update needed; WAN IP matches the Whitelist IP.")
                 break
