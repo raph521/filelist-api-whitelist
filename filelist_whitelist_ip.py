@@ -227,5 +227,5 @@ if __name__ == '__main__':
         else:
             logging.info("No change in WAN IP.")
 
-        # Wait for 1 minute before checking again
-        sleep(60)
+        # Wait for 2 minutes before checking again
+        sleep(120)
