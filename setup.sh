@@ -21,9 +21,6 @@ docker build --no-cache -t filelist-api-whitelist .
 # Run Docker Compose up and detach
 docker compose up --build -d
 
-# Sleep for a moment to let Docker services start
-sleep 5
-
 # Remove temporary username and password files
 rm username password
 
