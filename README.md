@@ -5,7 +5,7 @@
 This is a simple python script which uses requests to update your whitelisted public IP in your FileList profile so that you can use *arr type aplications if your IP is dynamic.
 
 ### How to build and run
-Make sure you have docker installed and that your current user can issue docker commands.
+Make sure you have docker installed and that your current user can issue docker commands.  
 https://docs.docker.com/engine/install/linux-postinstall/
 
 ```shell
@@ -32,5 +32,5 @@ docker prune -a
 After this, you can redo the first step "How to build and run"
 
 ## Contributing
-*Big thanks to Mnml*
+*Big thanks to Mnml*  
 Feel free to contribute or report bugs.
