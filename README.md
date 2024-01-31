@@ -32,5 +32,5 @@ docker prune -a
 After this, you can redo the first step "How to build and run"
 
 ## Contributing
-
+*Big thanks to Mnml*
 Feel free to contribute or report bugs.
