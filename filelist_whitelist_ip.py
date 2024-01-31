@@ -135,9 +135,11 @@ def fetch_and_update_profile(session, current_wan_ip):
 
             form_data = {}
             # Handle text inputs, radio buttons, and hidden inputs
-            for input_tag in soup.find_all('input', type=['text', 'radio', 'password', 'hidden']):
+            for input_tag in soup.find_all(lambda tag: (tag.name == 'input' and (not tag.has_attr('type') or tag['type'] not in ['checkbox', 'select'])) or tag.name == 'textarea'):
                 name = input_tag.get('name')
                 value = input_tag.get('value', '')
+                if input_tag.name == 'textarea':
+                    value = input_tag.string
                 if input_tag.get('type') == 'radio' and not input_tag.has_attr('checked'):
                     continue
                 if name:
