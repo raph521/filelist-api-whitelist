@@ -1,39 +1,45 @@
-# filelist-api
+# filelist-api-whitelist
 
 ### Introduction
 
 This is a simple python script which uses requests to update your whitelisted public IP in your FileList profile so that you can use *arr type aplications if your IP is dynamic.
 
-Keep in mind that you cannot restart the container, you need to rebuild it with setup.sh because the credentials are not persistent for security reasons. See last section.
+Credentials must be specified via environment variables.
 
-### How to build and run
-Make sure you have docker installed and that your current user can issue docker commands.  
-https://docs.docker.com/engine/install/linux-postinstall/
+## Config
 
-```shell
-mkdir ~/your_preferred_folder/
-cd ~/your_preferred_folder/
-git clone https://github.com/DevilRange/filelist-api-whitelist/
-cd ~/your_preferred_folder/filelist-api-whitelist/
-chmod u+x setup.sh
-./setup.sh
+### Environment Variables
+
+| Variable       | Example             | Default             | Description                  |
+|----------------|---------------------|---------------------|------------------------------|
+| `TZ`           | `America/New_York`  | `America/New_York`  | Timezone for use in logging  |
+| `FL_USERNAME`  | `MyUser`            |                     | FileList username            |
+| `FL_PASSWORD`  | `hunter2`           |                     | FileList password            |
+
+## Docker Compose Example
+
+```
+version: '3.9'
+
+services:
+    filelist-api-whitelist:
+        container_name: filelist-api-whitelist
+        image: filelist-api-whitelist
+        build:
+            context: ./filelist-api-whitelist
+            dockerfile: ./filelist-api-whitelist/Dockerfile
+        environment:
+            - TZ=${TZ}
+            - FL_USERNAME=${FL_USERNAME}
+            - FL_PASSWORD=${FL_PASSWORD}
 ```
 
 ### How to see container logs
 
 ```shell
-docker logs -f filelist-api
-```
-
-### How to fix if you mistype your credentials or if you need to restart
-
-```shell
-docker rm -f filelist-api
-docker prune -a
-cd ~/your_preferred_folder/filelist-api-whitelist/
-./setup.sh
+docker logs -f filelist-api-whitelist
 ```
 
 ## Contributing
-*Big thanks to Mnml*  
+*Big thanks to Mnml*
 Feel free to contribute or report bugs.

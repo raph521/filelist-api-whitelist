@@ -1,5 +1,7 @@
 FROM python:alpine
 
+ENV TZ="America/New_York"
+
 WORKDIR /usr/src/app
 
 RUN apk add --no-cache bash
