@@ -24,17 +24,14 @@ version: '3.9'
 services:
     filelist-api-whitelist:
         container_name: filelist-api-whitelist
-        image: filelist-api-whitelist
-        build:
-            context: ./filelist-api-whitelist
-            dockerfile: ./filelist-api-whitelist/Dockerfile
+        image: ghcr.io/raph521/filelist-api-whitelist:nightly
         environment:
             - TZ=${TZ}
             - FL_USERNAME=${FL_USERNAME}
             - FL_PASSWORD=${FL_PASSWORD}
 ```
 
-### How to see container logs
+## Container Logs
 
 ```shell
 docker logs -f filelist-api-whitelist
@@ -42,4 +39,5 @@ docker logs -f filelist-api-whitelist
 
 ## Contributing
 *Big thanks to Mnml*
+
 Feel free to contribute or report bugs.
